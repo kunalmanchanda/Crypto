@@ -16,4 +16,4 @@ export default App
 // git restore --staged <file> not staged for commit
 // git restore <file> to discard changes in working directory
 // git config --global user.name "Kunal  ncxjk"
-
+// git branch <>  git checkout <>
