@@ -1,10 +1,43 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import './App.css'
 
 const App = () => {
+  const [coins, setCoins] = useState([]);
+  const [search, setSearch] = useState('');
+
+  useEffect( async () => {
+    try {
+      const res = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false')
+      console.log(res.data)
+      setCoins(res.data)
+    }
+    catch(err) {
+      console.log(err)
+    }    
+  }, [])
+
+  const changeHandler = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const filteredCoins = coins.filter(coin => 
+    coin.name.toLowerCase().includes(search.toLowerCase())
+  )
+
   return (
-    <div>
-      <h1>HI</h1>
+    <div className="coin-app">
+      <div className="coin-search">
+        <div className="coin-text">Search a Currency</div>
+        <form action="">
+          <input type="text" placeholder="Search" className="coin-input" onChange={changeHandler}/>
+        </form>
+      </div>
+      {
+        filteredCoins.map(coin => {
+          <li>coin</li>
+        }) 
+      }
     </div>
   )
 }
